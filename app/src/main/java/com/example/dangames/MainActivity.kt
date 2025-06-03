@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.dangames.design.theme.DanGamesTheme
+import com.example.dangames.view.screen.home.HomeScreen
+import org.koin.androidx.compose.KoinAndroidContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DanGamesTheme {
-
+                App()
             }
         }
     }

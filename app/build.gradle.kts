@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
+    id("kotlin-kapt")
     kotlin("plugin.serialization") version "2.0.0"
 }
 
@@ -61,6 +62,8 @@ dependencies {
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
@@ -71,4 +74,12 @@ dependencies {
     implementation(libs.koin.androidx.compose.navigation)
 
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.shimmer.compose.shimmer)
+
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 }
