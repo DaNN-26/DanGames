@@ -100,10 +100,13 @@ fun DanGamesNavHost() {
                     animationSpec = tween(500)
                 ) + expandHorizontally { it / 2 }
             },
+            popEnterTransition = {
+                fadeIn(tween(600))
+            },
             popExitTransition = {
                 fadeOut(
-                    animationSpec = tween(900)
-                ) + shrinkHorizontally(animationSpec = tween(900)) { it / 2 }
+                    animationSpec = tween(600)
+                ) + shrinkHorizontally(animationSpec = tween(600)) { it / 2 }
             }
         ) {
             val viewModel = koinViewModel<SearchViewModel>()
@@ -118,6 +121,9 @@ fun DanGamesNavHost() {
         composable<NavDestination.Favorites>(
             enterTransition = {
                 slideInVertically { it }
+            },
+            popEnterTransition = {
+                fadeIn(tween(600))
             },
             popExitTransition = {
                 slideOutVertically(tween(600)) { it }

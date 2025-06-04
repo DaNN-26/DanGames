@@ -1,11 +1,5 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
 package com.example.dangames.view.screen.game_details
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
-import android.content.pm.ActivityInfo
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -20,7 +14,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,14 +22,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.dangames.design.theme.DanGamesTheme
 import com.example.dangames.network.domain.model.Model
 import com.example.dangames.view.components.topbar.DetailsTopBar
-import com.example.dangames.view.screen.game_details.components.GameDetailsInfo
 import com.example.dangames.view.screen.game_details.components.GameDetailsHeader
 import com.example.dangames.view.screen.game_details.components.GameDetailsHeaderShimmer
+import com.example.dangames.view.screen.game_details.components.GameDetailsInfo
 import com.example.dangames.view.screen.game_details.viewmodel.GameDetailsEvent
 import com.example.dangames.view.screen.game_details.viewmodel.GameDetailsViewModel
 
@@ -50,7 +42,6 @@ fun GameDetailsScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    LockScreenOrientation()
     Content(
         game = state.currentGame,
         getGameDetails = { viewModel.onEvent(GameDetailsEvent.GetGameDetails(gameId)) },
@@ -103,7 +94,7 @@ private fun Content(
                 buttonContentColor = topBarButtonContentColor
             )
         }
-    ) { it
+    ) { contentPadding -> @Suppress("UNUSED_EXPRESSION") contentPadding
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -127,23 +118,4 @@ private fun Content(
             } else GameDetailsHeaderShimmer()
         }
     }
-}
-
-@Composable
-private fun LockScreenOrientation() {
-    val context = LocalContext.current
-    DisposableEffect(Unit) {
-        val activity = context.findActivity() ?: return@DisposableEffect onDispose {}
-        val originalOrientation = activity.requestedOrientation
-        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        onDispose {
-            activity.requestedOrientation = originalOrientation
-        }
-    }
-}
-
-private fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
 }
