@@ -42,9 +42,9 @@ fun DanGamesNavHost() {
                 navigateToGameDetails = { gameId ->
                     navController.navigate(NavDestination.GameDetails(gameId))
                 },
-                navigateToAllGames = { navController.navigate(NavDestination.AllGames()) },
-                navigateToSearch = { navController.navigate(NavDestination.Search) },
-                navigateToFavorites = { navController.navigate(NavDestination.Favorites) }
+                navigateToAllGames = { navController.navigate(NavDestination.AllGames()) { launchSingleTop = true} },
+                navigateToSearch = { navController.navigate(NavDestination.Search) { launchSingleTop = true } },
+                navigateToFavorites = { navController.navigate(NavDestination.Favorites) { launchSingleTop = true } }
             )
         }
         composable<NavDestination.AllGames>(
@@ -75,7 +75,13 @@ fun DanGamesNavHost() {
             GameDetailsScreen(
                 viewModel = viewModel,
                 gameId = route.id,
-                navigateToGameSeries = { navController.navigate(NavDestination.GameSeries(route.id)) },
+                navigateToGameSeries = {
+                    navController.navigate(
+                        NavDestination.GameSeries(
+                            route.id
+                        )
+                    )
+                },
                 navigateToAdditionDetails = { gameId ->
                     navController.navigate(NavDestination.GameDetails(gameId))
                 },
@@ -113,7 +119,7 @@ fun DanGamesNavHost() {
             SearchScreen(
                 viewModel = viewModel,
                 navigateToGames = { query, genres ->
-                    navController.navigate(NavDestination.AllGames(query, genres))
+                    navController.navigate(NavDestination.AllGames(query, genres)) { launchSingleTop = true }
                 },
                 navigateBack = { navController.safePopBackStack() }
             )
